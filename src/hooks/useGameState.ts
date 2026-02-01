@@ -99,27 +99,15 @@ export function useGameState(roomId: string): UseGameStateResult {
   useEffect(() => {
     if (!roomId) return;
 
-    const channels: RealtimeChannel[] = [];
+    const channels: { unsubscribe: () => void }[] = [];
 
     // ルーム変更の購読
     const roomChannel = subscribeToRoom(roomId, ({ new: newRoom }) => {
       if (newRoom) {
-        const raw = newRoom as unknown as Record<string, unknown>;
-        const mapped: Room = {
-          id: raw.id as string,
-          code: raw.code as string,
-          status: raw.status as Room['status'],
-          currentTurn: raw.current_turn as number,
-          currentPhase: raw.current_phase as Room['currentPhase'],
-          currentYear: raw.current_year as number,
-          currentPlayerId: raw.current_player_id as string | null,
-          hostPlayerId: raw.host_player_id as string | null,
-          createdAt: raw.created_at as string,
-          updatedAt: raw.updated_at as string,
-        };
-        setRoom(mapped);
+        // モック版では既にRoom型で返される
+        setRoom(newRoom as Room);
         // フェーズが変わったらカードをリセット
-        if (mapped.currentPhase === 'roll') {
+        if ((newRoom as Room).currentPhase === 'roll') {
           setCurrentCard(null);
         }
       }
