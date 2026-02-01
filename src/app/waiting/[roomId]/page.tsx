@@ -73,26 +73,15 @@ export default function WaitingRoom() {
   useEffect(() => {
     if (!roomId) return;
 
-    const channels: RealtimeChannel[] = [];
+    const channels: { unsubscribe: () => void }[] = [];
 
     // ルーム変更の購読
     const roomChannel = subscribeToRoom(roomId, ({ new: newRoom }) => {
       if (newRoom) {
-        const raw = newRoom as unknown as Record<string, unknown>;
-        const mappedRoom: Room = {
-          id: raw.id as string,
-          code: raw.code as string,
-          status: raw.status as Room['status'],
-          currentTurn: raw.current_turn as number,
-          currentPhase: raw.current_phase as Room['currentPhase'],
-          currentYear: raw.current_year as number,
-          currentPlayerId: raw.current_player_id as string | null,
-          hostPlayerId: raw.host_player_id as string | null,
-          createdAt: raw.created_at as string,
-          updatedAt: raw.updated_at as string,
-        };
-        setRoom(mappedRoom);
-        if (mappedRoom.status === 'playing') {
+        // モック版では既にRoom型で返される
+        const room = newRoom as Room;
+        setRoom(room);
+        if (room.status === 'playing') {
           router.push(`/room/${roomId}`);
         }
       }
