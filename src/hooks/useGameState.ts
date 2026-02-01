@@ -140,20 +140,21 @@ export function useGameState(roomId: string): UseGameStateResult {
     // ゲーム状態変更の購読
     const gameStateChannel = subscribeToGameState(roomId, ({ new: newState }) => {
       if (newState) {
+        const raw = newState as unknown as Record<string, unknown>;
         const mapped: GameState = {
-          id: newState.id,
-          roomId: (newState as Record<string, unknown>).room_id as string,
+          id: raw.id as string,
+          roomId: raw.room_id as string,
           happiness: {
-            connection: (newState as Record<string, unknown>).happiness_connection as number,
-            culture: (newState as Record<string, unknown>).happiness_culture as number,
-            safety: (newState as Record<string, unknown>).happiness_safety as number,
-            health: (newState as Record<string, unknown>).happiness_health as number,
-            environment: (newState as Record<string, unknown>).happiness_environment as number,
+            connection: raw.happiness_connection as number,
+            culture: raw.happiness_culture as number,
+            safety: raw.happiness_safety as number,
+            health: raw.happiness_health as number,
+            environment: raw.happiness_environment as number,
           },
-          population: (newState as Record<string, unknown>).population as number,
-          relatedPopulation: (newState as Record<string, unknown>).related_population as number,
-          createdAt: (newState as Record<string, unknown>).created_at as string,
-          updatedAt: (newState as Record<string, unknown>).updated_at as string,
+          population: raw.population as number,
+          relatedPopulation: raw.related_population as number,
+          createdAt: raw.created_at as string,
+          updatedAt: raw.updated_at as string,
         };
         setGameState(mapped);
       }
