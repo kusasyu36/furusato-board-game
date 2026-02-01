@@ -46,7 +46,7 @@ export function useGameState(roomId: string): UseGameStateResult {
   // プレイヤーIDを取得
   const getPlayerId = useCallback(() => {
     if (typeof window === 'undefined') return null;
-    return localStorage.getItem(`player_${roomId}`);
+    return sessionStorage.getItem(`player_${roomId}`);
   }, [roomId]);
 
   // データ読み込み
