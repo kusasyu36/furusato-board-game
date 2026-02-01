@@ -16,7 +16,6 @@ import {
   unsubscribe,
 } from '@/lib/supabase/realtime';
 import { GameEngine } from '@/lib/game/engine';
-import { RealtimeChannel } from '@supabase/supabase-js';
 
 interface UseGameStateResult {
   room: Room | null;
