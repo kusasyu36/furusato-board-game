@@ -15,7 +15,6 @@ import {
   startGame,
 } from '@/lib/supabase/api';
 import { subscribeToRoom, subscribeToPlayers, unsubscribe } from '@/lib/supabase/realtime';
-import { RealtimeChannel } from '@supabase/supabase-js';
 
 const ROLES: Role[] = ['citizen', 'business', 'government', 'visitor'];
 
