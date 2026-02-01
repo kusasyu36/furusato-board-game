@@ -79,17 +79,18 @@ export default function WaitingRoom() {
     // ルーム変更の購読
     const roomChannel = subscribeToRoom(roomId, ({ new: newRoom }) => {
       if (newRoom) {
+        const raw = newRoom as unknown as Record<string, unknown>;
         const mappedRoom: Room = {
-          id: newRoom.id,
-          code: (newRoom as Record<string, unknown>).code as string,
-          status: (newRoom as Record<string, unknown>).status as Room['status'],
-          currentTurn: (newRoom as Record<string, unknown>).current_turn as number,
-          currentPhase: (newRoom as Record<string, unknown>).current_phase as Room['currentPhase'],
-          currentYear: (newRoom as Record<string, unknown>).current_year as number,
-          currentPlayerId: (newRoom as Record<string, unknown>).current_player_id as string | null,
-          hostPlayerId: (newRoom as Record<string, unknown>).host_player_id as string | null,
-          createdAt: (newRoom as Record<string, unknown>).created_at as string,
-          updatedAt: (newRoom as Record<string, unknown>).updated_at as string,
+          id: raw.id as string,
+          code: raw.code as string,
+          status: raw.status as Room['status'],
+          currentTurn: raw.current_turn as number,
+          currentPhase: raw.current_phase as Room['currentPhase'],
+          currentYear: raw.current_year as number,
+          currentPlayerId: raw.current_player_id as string | null,
+          hostPlayerId: raw.host_player_id as string | null,
+          createdAt: raw.created_at as string,
+          updatedAt: raw.updated_at as string,
         };
         setRoom(mappedRoom);
         if (mappedRoom.status === 'playing') {
