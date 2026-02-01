@@ -127,23 +127,8 @@ export function useGameState(roomId: string): UseGameStateResult {
     // ゲーム状態変更の購読
     const gameStateChannel = subscribeToGameState(roomId, ({ new: newState }) => {
       if (newState) {
-        const raw = newState as unknown as Record<string, unknown>;
-        const mapped: GameState = {
-          id: raw.id as string,
-          roomId: raw.room_id as string,
-          happiness: {
-            connection: raw.happiness_connection as number,
-            culture: raw.happiness_culture as number,
-            safety: raw.happiness_safety as number,
-            health: raw.happiness_health as number,
-            environment: raw.happiness_environment as number,
-          },
-          population: raw.population as number,
-          relatedPopulation: raw.related_population as number,
-          createdAt: raw.created_at as string,
-          updatedAt: raw.updated_at as string,
-        };
-        setGameState(mapped);
+        // モック版では既にGameState型で返される
+        setGameState(newState as GameState);
       }
     });
     channels.push(gameStateChannel);
