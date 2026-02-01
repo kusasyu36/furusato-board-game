@@ -28,7 +28,7 @@ export default function Home() {
 
     try {
       const { room, player } = await createRoom(playerName.trim());
-      localStorage.setItem(`player_${room.id}`, player.id);
+      sessionStorage.setItem(`player_${room.id}`, player.id);
       router.push(`/waiting/${room.id}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'ルームの作成に失敗しました');
