@@ -5,3 +5,4 @@ export { PopulationMeter } from './PopulationMeter';
 export { ActionPanel } from './ActionPanel';
 export { GameLog } from './GameLog';
 export { GameHeader } from './GameHeader';
+export { GameRules } from './GameRules';
