@@ -33,7 +33,7 @@ export default function WaitingRoom() {
   // 初期データ読み込み
   const loadData = useCallback(async () => {
     try {
-      const playerId = localStorage.getItem(`player_${roomId}`);
+      const playerId = sessionStorage.getItem(`player_${roomId}`);
       if (!playerId) {
         router.push('/');
         return;
